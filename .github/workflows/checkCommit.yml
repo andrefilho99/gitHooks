@@ -1,0 +1,26 @@
+name: 'Commit Message Check'
+on:
+  push:
+    branches: 
+      - master
+      - main
+      - issue*
+      - 'issue*'
+
+jobs:
+  check-commit-message:
+    name: Check Commit Message
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get PR Commits
+        id: 'get-pr-commits'
+        uses: tim-actions/get-pr-commits@master
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Check Subject Line Length
+        uses: tim-actions/commit-message-checker-with-regex@v0.1.0
+        with:
+          commits: ${{ steps.get-pr-commits.outputs.commits }}
+          pattern: '^#[0-9]'
+          error: 'Commit não segue o padrão #issue.'
