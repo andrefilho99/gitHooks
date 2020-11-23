@@ -2,7 +2,6 @@ name: 'Commit Message Check'
 on:
   push:
     branches:
-      - master
       - 'issue*'
 
 jobs:
