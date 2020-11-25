@@ -7,7 +7,7 @@ PATTERN="^#[0-9]*"
 ISSUE_NUMBER="$(echo $MSG | grep -o -E '[0-9]+')"
 
 if [[ $MSG =~ $PATTERN ]];then
-        echo "Commit de acordo com as diretrizes estabelecidas!"
+        echo "Commit de acordo com o padrão preestabelecido!"
 else
         echo "Commit não possui número de issue!"
         exit 1
@@ -19,7 +19,7 @@ RAW_JSON="$(curl $CURLARGS $API_URL)"
 DOING_PATTERN="doing"
 
 if [[ $RAW_JSON =~ $DOING_PATTERN ]];then
-        echo "Issue está em desenvolvimento!"
+        echo "Issue possui label doing!"
 else
         echo "Adicione a label doing para realizar commits nessa issue!"
         exit 1
