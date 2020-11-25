@@ -1,0 +1,11 @@
+#!/bin/bash
+
+MSG="$(git show --format='%B' -s $SHA1)"
+ISSUE_NUMBER="$(echo $MSG | grep -o -E '[0-9]+')"
+
+COMMENT=""
+COMMENT="$COMMENT$(date) \n"
+COMMENT="$COMMENT$(git config user.name) \n"
+COMMENT="$COMMENT$MSG"
+
+curl -X POST -H "Accept: application/vnd.github.v3+json " -H "Authorization: token c2170ff2f90029c06aa0d7a56bb4cd29fb6f4957" https://api.github.com/repos/andrefilho99/gitHooks/issues/$ISSUE_NUMBER/comments --data "{ \"body\":\"$COMMENT\"}"
