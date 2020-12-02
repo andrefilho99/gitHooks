@@ -1,15 +1,13 @@
 #!/bin/bash
 
-echo "Iniciando checagem do commit..."
-
-MSG="$(cat $1)"
-PATTERN="^#[0-9]*"
+COMMIT_MSG="$(cat $1)"
+REGEX="^#[0-9]*"
 ISSUE_NUMBER="$(echo $MSG | grep -o -E '[0-9]+')"
 
-if [[ $MSG =~ $PATTERN ]];then
-        echo "Commit de acordo com o padrão preestabelecido!"
+if [[ $COMMIT_MSG =~ $REGEX ]];then
+        echo "Commit message is OK!"
 else
-        echo "Commit não possui número de issue!"
+        echo "There is no issue number within the commit message"
         exit 1
 fi
 
@@ -19,8 +17,8 @@ RAW_JSON="$(curl $CURLARGS $API_URL)"
 DOING_PATTERN="doing"
 
 if [[ $RAW_JSON =~ $DOING_PATTERN ]];then
-        echo "Issue possui label doing!"
+        echo "The issue has the label setted to DOING!"
 else
-        echo "Adicione a label doing para realizar commits nessa issue!"
+        echo "Add/Change the issue label to DOING."
         exit 1
 fi
